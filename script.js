@@ -1,3 +1,5 @@
+// QR Code library: https://github.com/soldair/node-qrcode
+
 const buttonL = document.getElementById("button-l");
 const buttonM = document.getElementById("button-m");
 const buttonQ = document.getElementById("button-q");
