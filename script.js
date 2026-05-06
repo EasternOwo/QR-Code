@@ -31,7 +31,7 @@ function setColor(color) {
     colorPickerWrapper.style.backgroundColor = color;
     hexField.value = colorPicker.value.toUpperCase();
 
-    updateCode()
+    updateCode();
 }
 
 function setColorFromPicker() {
@@ -40,11 +40,15 @@ function setColorFromPicker() {
 }
 
 function setColorFromHex() {
-    let re = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
+    let re1 = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
+    let re2 = /([0-9a-f]{3}|[0-9a-f]{6})$/i;
+    
     let color = hexField.value;
 
-    if (re.test(color)) {
+    if (re1.test(color)) {
         setColor(color);
+    } else if (re2.test(color)) {
+        setColor('#' + color);
     } else {
         setColor('#000000');
     }
@@ -79,7 +83,7 @@ async function updateCode() {
             dark: colorPicker.value + "FF",
             light: "#00000000"
         }
-    }
+    };
 
     let bri = calculateBrightness(colorPicker.value);
 
@@ -120,7 +124,7 @@ function downloadPNG() {
             dark: colorPicker.value + "FF",
             light:"#00000000"
         }
-    }
+    };
 
     QRCode.toDataURL(
         textField.value, 
@@ -149,7 +153,7 @@ function downloadSVG() {
             dark: colorPicker.value + "FF",
             light:"#00000000"
         }
-    }
+    };
 
     QRCode.toString(
         textField.value, 
