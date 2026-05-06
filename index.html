@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>QR Code 產生器</title>
+  <link rel="icon" type="image/x-icon" href="images/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css">
+
+  <meta property="og:title" content="QR Code 產生器">
+  <meta property="og:description" content="製作 QR Code>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@800&display=swap" rel="stylesheet">
+
+  <!-- <script type="text/javascript" src="jquery.min.js"></script>
+  <script type="text/javascript" src="qrcode.js"></script> -->
+</head>
+
+<body>
+
+  <main>
+    <div class="sheet">
+      <div class="title-group">
+        <div class="title-circle"></div>
+        <h1 class="responsive-title"></h1>
+      </div>
+
+      <div class="main-divide">
+        <div>
+          <h3>編碼內容</h3>
+          <input type="text" id="text-field" placeholder="輸入文字" style="width: 100%; padding: 5px; box-sizing: border-box; margin-bottom: 1rem; font-size: 12pt;" oninput="updateCode()"></input>
+
+          <h3>容錯能力</h3>
+          <div style="display: flex; column-gap: 5px; margin-bottom: 1rem;">
+            <button id="button-l" class="radio-button" onclick="setErrorCorrectionLevel('L')">L</button>
+            <button id="button-m" class="radio-button" onclick="setErrorCorrectionLevel('M')">M</button>
+            <button id="button-q" class="radio-button" onclick="setErrorCorrectionLevel('Q')">Q</button>
+            <button id="button-h" class="radio-button" onclick="setErrorCorrectionLevel('H')">H</button>
+          </div>
+
+          <h3>顏色</h3>
+          <div style="display: flex; column-gap: 10px; align-items: center;">
+            <button id="picker-wrapper">
+              <input type="color" value="#000000" id="picker" onchange="setColorFromPicker()" style="width: 55px; height: 55px; opacity: 0%;">
+            </button>
+            <input type="text" id="hex-field" placeholder="輸入色碼" value="#000000" style="width: 100%; padding: 5px; box-sizing: border-box; font-size: 12pt;" onchange="setColorFromHex()"></input>
+          </div>
+        </div>
+
+        <div style="width: 100%; padding: 20px; background-color: #E2E6E9; border-radius: 0.3rem; box-sizing: border-box;">
+          <div id="qrcode-bg" style="padding: 30px; margin-bottom: 15px; border-width: 0px; border-radius: 0.3rem; background-color: white; display: flex; align-items: center; justify-content: center; transition: 0.3s;">
+            <img id="qrcode" src="images/blank.png" style="width: 150px; height: 150px;"></img>
+          </div>
+          
+          <h3>下載格式</h3>
+          <div style="display: flex; column-gap: 5px;">
+            <button class="download-button" onclick="downloadPNG()">PNG</button>
+            <button class="download-button" onclick="downloadSVG()">SVG</button>
+          </div>
+        </div>
+      </div>
+      
+    <!-- </div>
+    <div id="qrcode-download" style="visibility: hidden;"> -->
+      <footer>
+        Made by 東 Eastern
+      </footer>
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.4.4/qrcode.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
