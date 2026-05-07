@@ -21,9 +21,9 @@
     <div class="sheets">
     <div class="sheet">
       <div class="title-group">
-        <a class="title-circle" href="https://easternowo.github.io"></a>
         <h1 class="responsive-title-1">QR Code 產生器</h1>
         <h1 class="responsive-title-2">QR 產生器</h1>
+        <a class="title-circle" href="https://easternowo.github.io"></a>
       </div>
 
       <div class="main-divide">
@@ -66,15 +66,21 @@
           </div>
         </div>
 
-        <div style="width: 100%; padding: 20px; background-color: #E2E6E9; border-radius: 0.3rem; box-sizing: border-box;">
-          <div id="qrcode-bg" style="padding: 30px; margin-bottom: 10px; border-width: 0px; border-radius: 0.3rem; background-color: white; display: flex; align-items: center; justify-content: center; transition: 0.3s;">
+        <div style="width: 100%; padding: 15px; background-color: #E2E6E9; border-radius: 0.3rem; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; row-gap: 8px;">
+          <div id="qrcode-bg" style="height:100%; padding: 30px; border-width: 0px; border-radius: 0.3rem; background-color: white; display: flex; align-items: center; justify-content: center; transition: 0.3s;">
             <img id="qrcode" src="images/blank.png" style="width: 150px; height: 150px;"></img>
           </div>
           
-          <div style="display: flex; column-gap: 5px; align-items: center; justify-content: right;">
-            <h3 style="margin: 0px; margin-right: 5px;">下載</h3>
-            <button class="download-button" onclick="downloadPNG()">PNG</button>
-            <button class="download-button" onclick="downloadSVG()">SVG</button>
+          <div style="display: flex; column-gap: 8px; align-items: center; justify-content: right;">
+            <!-- <h3 style="margin: 0px; margin-right: 5px;">下載</h3> -->
+            <button class="download-button" onclick="downloadPNG()">
+              <span>下載</span>
+              <span>PNG</span>
+            </button>
+            <button class="download-button" onclick="downloadSVG()">
+              <span>下載</span>
+              <span>SVG</span>
+            </button>
           </div>
         </div>
       </div>
