@@ -13,6 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -23,7 +24,7 @@
       <div class="title-group">
         <h1 class="responsive-title-1">QR Code 產生器</h1>
         <h1 class="responsive-title-2">QR 產生器</h1>
-        <a class="title-circle" href="https://easternowo.github.io"></a>
+        <div class="title-circle"></div>
       </div>
 
       <div class="main-divide">
@@ -44,15 +45,25 @@
           </div> -->
 
           <div class="parameter-box">
-            <h3>容錯等級</h3>
-            <input id="ec-slider" class="slider" type="range" min="0" max="3" value="1" step="1" oninput="setErrorCorrectionLevel()" style="margin-top: 10px; margin-bottom: 18px;">
-            <span id="ec-slider-text" style="font-size: 0.9rem; color: #888;">M：容許 15% 圖形毀損</span>
+            <div class="parameter-title-group">
+              <h3>容錯等級</h3>
+              <div class="parameter-title-circle mono">
+                <span id="ec-value-text">M</span>
+              </div>
+            </div>
+            <input id="ec-slider" class="slider" type="range" min="-0.25" max="3.25" value="1" step="0.01" oninput="setErrorCorrectionLevel()">
+            <span id="ec-slider-text" style="font-size: 0.9rem; color: #888;">可修正約 7% 的圖形損壞</span>
           </div>
 
           <div class="parameter-box">
-            <h3>格子尺寸</h3>
-            <input id="size-slider" class="slider" type="range" min="1" max="32" value="10" step="1" oninput="setSize()" style="margin-top: 10px; margin-bottom: 18px;">
-            <span id="size-slider-text" style="font-size: 0.9rem; color: #888;">一格為 10 × 10 像素</span>
+            <div class="parameter-title-group">
+              <h3>輸出尺寸</h3>
+              <div class="parameter-title-circle mono">
+                <span id="size-value-text">16</span>
+              </div>
+            </div>
+            <input id="size-slider" class="slider" type="range" min="1" max="32" value="10" step="1" oninput="setSize()">
+            <span id="size-slider-text" style="font-size: 0.9rem; color: #888;">一格對應 10 × 10 像素</span>
           </div>
 
           <div class="parameter-box" style="padding-bottom: 15px;">
@@ -61,7 +72,7 @@
               <button id="picker-wrapper">
                 <input type="color" value="#000000" id="picker" onchange="setColorFromPicker()" style="width: 55px; height: 35px; opacity: 0%;">
               </button>
-              <input class="text-field" type="text" id="hex-field" placeholder="輸入色碼" value="#000000" onchange="setColorFromHex()"></input>
+              <input class="text-field mono" type="text" id="hex-field" placeholder="輸入色碼" value="#000000" onchange="setColorFromHex()"></input>
             </div>
           </div>
         </div>
@@ -73,13 +84,11 @@
           
           <div style="display: flex; column-gap: 8px; align-items: center; justify-content: right;">
             <!-- <h3 style="margin: 0px; margin-right: 5px;">下載</h3> -->
-            <button class="download-button" onclick="downloadPNG()">
-              <span>下載</span>
-              <span>PNG</span>
+            <button class="download-button mono" onclick="downloadPNG()">
+              PNG
             </button>
-            <button class="download-button" onclick="downloadSVG()">
-              <span>下載</span>
-              <span>SVG</span>
+            <button class="download-button mono" onclick="downloadSVG()">
+              SVG
             </button>
           </div>
         </div>

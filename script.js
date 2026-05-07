@@ -3,9 +3,11 @@
 const textField = document.getElementById("text-field");
 
 let currentLevel = 'L';
+const ecValText = document.getElementById("ec-value-text");
 const ecSlider = document.getElementById("ec-slider");
 const ecSliderText = document.getElementById("ec-slider-text");
 
+const sizeValText = document.getElementById("size-value-text");
 const sizeSlider = document.getElementById("size-slider");
 const sizeSliderText = document.getElementById("size-slider-text");
 
@@ -19,18 +21,25 @@ const codeBg = document.getElementById("qrcode-bg");
 const dict = {0: "L", 1: "M", 2: "Q", 3: "H"};
 const dict2 = {0: 7, 1: 15, 2: 25, 3: 30};
 
+// let ecRecord = 1;
+
 function setErrorCorrectionLevel() {
-    const val = ecSlider.valueAsNumber;
+    
+    const val = Math.round(ecSlider.valueAsNumber);
+    ecSlider.value = val;
+
     const newLevel = dict[val];
 
     currentLevel = newLevel;
-    ecSliderText.textContent = newLevel + "：容許 " + dict2[val] + "% 圖形毀損";
+    ecValText.textContent = newLevel;
+    ecSliderText.textContent = "圖形毀損 " + dict2[val] + "% 時仍可掃描";
     updateCode();
 }
 
 function setSize() {
     const val = sizeSlider.valueAsNumber;
-    sizeSliderText.textContent = "一格為 " + val + " × " + val + " 像素";
+    sizeValText.textContent = val;
+    sizeSliderText.textContent = "一格對應 " + val + " × " + val + " 像素";
 }
 
 function setColor(color) {
