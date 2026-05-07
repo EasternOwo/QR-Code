@@ -21,12 +21,13 @@
     <div class="sheet">
       <div class="title-group">
         <a class="title-circle" href="https://easternowo.github.io"></a>
-        <h1 class="responsive-title"></h1>
+        <h1 class="responsive-title-1">QR Code 產生器</h1>
+        <h1 class="responsive-title-2">QR 產生器</h1>
       </div>
 
       <div class="main-divide">
-        <div style="display: flex; flex-direction: column; row-gap: 20px;">
-          <div class="parameter-box">
+        <div style="display: flex; flex-direction: column; row-gap: 15px;">
+          <div class="parameter-box" style="padding-bottom: 15px;">
             <h3>內容</h3>
             <input class="text-field" type="text" id="text-field" placeholder="輸入文字" oninput="updateCode()"></input>
           </div>
@@ -43,21 +44,21 @@
 
           <div class="parameter-box">
             <h3>容錯等級</h3>
-            <input id="ec-slider" class="slider" type="range" min="0" max="3" value="1" step="1" oninput="setErrorCorrectionLevel()" style="margin-top: 10px; margin-bottom: 15px;">
+            <input id="ec-slider" class="slider" type="range" min="0" max="3" value="1" step="1" oninput="setErrorCorrectionLevel()" style="margin-top: 10px; margin-bottom: 18px;">
             <span id="ec-slider-text" style="font-size: 0.9rem; color: #888;">M：容許 15% 圖形毀損</span>
           </div>
 
           <div class="parameter-box">
             <h3>格子尺寸</h3>
-            <input id="size-slider" class="slider" type="range" min="1" max="32" value="10" step="1" oninput="setSize()" style="margin-top: 10px; margin-bottom: 15px;">
+            <input id="size-slider" class="slider" type="range" min="1" max="32" value="10" step="1" oninput="setSize()" style="margin-top: 10px; margin-bottom: 18px;">
             <span id="size-slider-text" style="font-size: 0.9rem; color: #888;">一格為 10 × 10 像素</span>
           </div>
 
-          <div class="parameter-box">
+          <div class="parameter-box" style="padding-bottom: 15px;">
           <h3>顏色</h3>
             <div style="display: flex; column-gap: 10px; align-items: center;">
               <button id="picker-wrapper">
-                <input type="color" value="#000000" id="picker" onchange="setColorFromPicker()" style="width: 55px; height: 55px; opacity: 0%;">
+                <input type="color" value="#000000" id="picker" onchange="setColorFromPicker()" style="width: 55px; height: 35px; opacity: 0%;">
               </button>
               <input class="text-field" type="text" id="hex-field" placeholder="輸入色碼" value="#000000" onchange="setColorFromHex()"></input>
             </div>
@@ -65,12 +66,12 @@
         </div>
 
         <div style="width: 100%; padding: 20px; background-color: #E2E6E9; border-radius: 0.3rem; box-sizing: border-box;">
-          <div id="qrcode-bg" style="padding: 30px; margin-bottom: 15px; border-width: 0px; border-radius: 0.3rem; background-color: white; display: flex; align-items: center; justify-content: center; transition: 0.3s;">
+          <div id="qrcode-bg" style="padding: 30px; margin-bottom: 10px; border-width: 0px; border-radius: 0.3rem; background-color: white; display: flex; align-items: center; justify-content: center; transition: 0.3s;">
             <img id="qrcode" src="images/blank.png" style="width: 150px; height: 150px;"></img>
           </div>
           
-          <h3>下載格式</h3>
-          <div style="display: flex; column-gap: 5px;">
+          <div style="display: flex; column-gap: 5px; align-items: center; justify-content: right;">
+            <h3 style="margin: 0px; margin-right: 5px;">下載</h3>
             <button class="download-button" onclick="downloadPNG()">PNG</button>
             <button class="download-button" onclick="downloadSVG()">SVG</button>
           </div>
