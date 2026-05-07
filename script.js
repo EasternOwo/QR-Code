@@ -42,8 +42,6 @@ function setSize() {
     sizeSliderText.textContent = "一格為 " + val + " × " + val + " 像素";
 }
 
-// function setPlaceholderQRCode() {}
-
 function setColor(color) {
     colorPicker.value = color;
     colorPickerWrapper.style.backgroundColor = color;
