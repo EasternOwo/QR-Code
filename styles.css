@@ -10,8 +10,49 @@
 
 .main-divide {
     display: flex;
-    column-gap: 30px;
-    row-gap: 30px;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.parameter-box {
+    padding: 15px;
+    padding-top: 9px;
+
+    border-color: #E2E6E9;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 0.3rem;
+}
+
+.text-field {
+    border-width: 1px;
+    border-color: #DDD;
+    border-style: solid;
+    border-radius: 0.3rem;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    font-size: 12pt;
+}
+
+.slider {
+    appearance: none;
+    margin: 0px;
+    width: 100%;
+    height: 6px;
+    border-radius: 6px;
+    border: 1px solid #aaa;
+    background: #E2E6E9;
+}
+
+.slider::-webkit-slider-thumb {
+    appearance: none;
+    background: #fff;
+    border: 1px solid #aaa;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    box-shadow: none;
 }
 
 .radio-button {
@@ -32,16 +73,9 @@
     height: 55px;
     padding: 0px;
 
-    /* box-sizing: border-box; */
-    /* border-width: 2px;
-    border-color: #666666;
-    border-style:solid; */
-
     border-width: 0px;
     border-radius: 0.3rem;
-
     box-shadow: inset 0 0 0 2px #666666; 
-    
 
     background-color: #000000;
 }
@@ -284,9 +318,9 @@ h2 {
 h3 {
     margin: 0;
     margin-bottom: 0.5rem;
-    font-size: 0.9rem;
+    font-size: 1.0rem;
     font-weight: 400;
-    color: #666666;
+    color: #444444;
 }
 
 .character-list {

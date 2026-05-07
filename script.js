@@ -1,29 +1,45 @@
 // QR Code library: https://github.com/soldair/node-qrcode
 
-const buttonL = document.getElementById("button-l");
-const buttonM = document.getElementById("button-m");
-const buttonQ = document.getElementById("button-q");
-const buttonH = document.getElementById("button-h");
+// const buttonL = document.getElementById("button-l");
+// const buttonM = document.getElementById("button-m");
+// const buttonQ = document.getElementById("button-q");
+// const buttonH = document.getElementById("button-h");
 
-const ecButtons = [buttonL, buttonQ, buttonM, buttonH];
+// const ecButtons = [buttonL, buttonQ, buttonM, buttonH];
 
 const textField = document.getElementById("text-field");
-const image = document.getElementById("qrcode");
+
+let currentLevel = 'L';
+const ecSlider = document.getElementById("ec-slider");
+const ecSliderText = document.getElementById("ec-slider-text");
+
+const sizeSlider = document.getElementById("size-slider");
+const sizeSliderText = document.getElementById("size-slider-text");
+
 const colorPicker = document.getElementById("picker");
 const colorPickerWrapper = document.getElementById("picker-wrapper");
 const hexField = document.getElementById("hex-field");
 
+const codeImg = document.getElementById("qrcode");
 const codeBg = document.getElementById("qrcode-bg");
 
-function setErrorCorrectionLevel(level) {
-    ecButtons.forEach(ele => {
-        ele.style.backgroundColor = "#66a4d9";
-    });
+const dict = {0: "L", 1: "M", 2: "Q", 3: "H"};
+const dict2 = {0: 7, 1: 15, 2: 25, 3: 30};
 
-    const selectedButton = document.getElementById("button-" + level.toLowerCase());
-    selectedButton.style.background = '#436f96';
-    currentLevel = level;
-    updateCode();
+function setErrorCorrectionLevel() {
+    const val = ecSlider.valueAsNumber;
+    const newLevel = dict[val];
+
+    // if (newLevel != currentLevel) {
+        currentLevel = newLevel;
+        ecSliderText.textContent = newLevel + "：容許 " + dict2[val] + "% 圖形毀損";
+        updateCode();
+    // }
+}
+
+function setSize() {
+    const val = sizeSlider.valueAsNumber;
+    sizeSliderText.textContent = "一格為 " + val + " × " + val + " 像素";
 }
 
 // function setPlaceholderQRCode() {}
@@ -66,10 +82,10 @@ function calculateBrightness(colorHex) {
     return bri
 }
 
-let currentLevel = "L";
-setErrorCorrectionLevel(currentLevel);
-
+// let currentLevel = "L";
 let isUpdating = false;
+setErrorCorrectionLevel();
+setSize();
 
 async function updateCode() {
     if (isUpdating) return;
@@ -95,12 +111,12 @@ async function updateCode() {
             textField.value, 
             opts
         );
-        image.src = dataURL;
+        codeImg.src = dataURL;
     } catch {
         if (bri > 0.75) {
-            image.src = "images/blank_white.png";
+            codeImg.src = "images/blank_white.png";
         } else {
-            image.src = "images/blank.png";
+            codeImg.src = "images/blank.png";
         }
     } finally {
         if (bri > 0.75) {
@@ -121,7 +137,7 @@ function downloadPNG() {
         errorCorrectionLevel: currentLevel,
         quality: 0.3,
         margin: 0,
-        scale: 10,
+        scale: sizeSlider.valueAsNumber,
         color: {
             dark: colorPicker.value + "FF",
             light:"#00000000"
@@ -150,7 +166,7 @@ function downloadSVG() {
         errorCorrectionLevel: currentLevel,
         quality: 0.3,
         margin: 0,
-        scale: 10,
+        scale: sizeSlider.valueAsNumber,
         color: {
             dark: colorPicker.value + "FF",
             light:"#00000000"

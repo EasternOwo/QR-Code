@@ -25,24 +25,42 @@
       </div>
 
       <div class="main-divide">
-        <div>
-          <h3>內容</h3>
-          <input type="text" id="text-field" placeholder="輸入文字" style="width: 100%; padding: 5px; box-sizing: border-box; margin-bottom: 1rem; font-size: 12pt;" oninput="updateCode()"></input>
-
-          <h3>容錯能力</h3>
-          <div style="display: flex; column-gap: 5px; margin-bottom: 1rem;">
-            <button id="button-l" class="radio-button" onclick="setErrorCorrectionLevel('L')">L</button>
-            <button id="button-m" class="radio-button" onclick="setErrorCorrectionLevel('M')">M</button>
-            <button id="button-q" class="radio-button" onclick="setErrorCorrectionLevel('Q')">Q</button>
-            <button id="button-h" class="radio-button" onclick="setErrorCorrectionLevel('H')">H</button>
+        <div style="display: flex; flex-direction: column; row-gap: 20px;">
+          <div class="parameter-box">
+            <h3>內容</h3>
+            <input class="text-field" type="text" id="text-field" placeholder="輸入文字" oninput="updateCode()"></input>
           </div>
 
+          <!-- <div class="parameter-box">
+            <h3>容錯能力</h3>
+            <div style="display: flex; column-gap: 5px;">
+              <button id="button-l" class="radio-button" onclick="setErrorCorrectionLevel('L')">L</button>
+              <button id="button-m" class="radio-button" onclick="setErrorCorrectionLevel('M')">M</button>
+              <button id="button-q" class="radio-button" onclick="setErrorCorrectionLevel('Q')">Q</button>
+              <button id="button-h" class="radio-button" onclick="setErrorCorrectionLevel('H')">H</button>
+            </div>
+          </div> -->
+
+          <div class="parameter-box">
+            <h3>容錯等級</h3>
+            <input id="ec-slider" class="slider" type="range" min="0" max="3" value="1" step="1" oninput="setErrorCorrectionLevel()" style="margin-top: 10px; margin-bottom: 15px;">
+            <span id="ec-slider-text" style="font-size: 0.9rem; color: #888;">M：容許 15% 圖形毀損</span>
+          </div>
+
+          <div class="parameter-box">
+            <h3>尺寸</h3>
+            <input id="size-slider" class="slider" type="range" min="1" max="32" value="10" step="1" oninput="setSize()" style="margin-top: 10px; margin-bottom: 15px;">
+            <span id="size-slider-text" style="font-size: 0.9rem; color: #888;">一格為 10 × 10 像素</span>
+          </div>
+
+          <div class="parameter-box">
           <h3>顏色</h3>
-          <div style="display: flex; column-gap: 10px; align-items: center;">
-            <button id="picker-wrapper">
-              <input type="color" value="#000000" id="picker" onchange="setColorFromPicker()" style="width: 55px; height: 55px; opacity: 0%;">
-            </button>
-            <input type="text" id="hex-field" placeholder="輸入色碼" value="#000000" style="width: 100%; padding: 5px; box-sizing: border-box; font-size: 12pt;" onchange="setColorFromHex()"></input>
+            <div style="display: flex; column-gap: 10px; align-items: center;">
+              <button id="picker-wrapper">
+                <input type="color" value="#000000" id="picker" onchange="setColorFromPicker()" style="width: 55px; height: 55px; opacity: 0%;">
+              </button>
+              <input class="text-field" type="text" id="hex-field" placeholder="輸入色碼" value="#000000" onchange="setColorFromHex()"></input>
+            </div>
           </div>
         </div>
 
