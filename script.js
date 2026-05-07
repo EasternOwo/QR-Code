@@ -1,12 +1,5 @@
 // QR Code library: https://github.com/soldair/node-qrcode
 
-// const buttonL = document.getElementById("button-l");
-// const buttonM = document.getElementById("button-m");
-// const buttonQ = document.getElementById("button-q");
-// const buttonH = document.getElementById("button-h");
-
-// const ecButtons = [buttonL, buttonQ, buttonM, buttonH];
-
 const textField = document.getElementById("text-field");
 
 let currentLevel = 'L';
@@ -30,11 +23,9 @@ function setErrorCorrectionLevel() {
     const val = ecSlider.valueAsNumber;
     const newLevel = dict[val];
 
-    // if (newLevel != currentLevel) {
-        currentLevel = newLevel;
-        ecSliderText.textContent = newLevel + "：容許 " + dict2[val] + "% 圖形毀損";
-        updateCode();
-    // }
+    currentLevel = newLevel;
+    ecSliderText.textContent = newLevel + "：容許 " + dict2[val] + "% 圖形毀損";
+    updateCode();
 }
 
 function setSize() {
@@ -80,7 +71,6 @@ function calculateBrightness(colorHex) {
     return bri
 }
 
-// let currentLevel = "L";
 let isUpdating = false;
 setErrorCorrectionLevel();
 setSize();
