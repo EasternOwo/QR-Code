@@ -84,6 +84,8 @@ let isUpdating = false;
 setErrorCorrectionLevel();
 setSize();
 
+let qrData = null;
+
 async function updateCode() {
     if (isUpdating) return;
 
@@ -103,6 +105,13 @@ async function updateCode() {
     let bri = calculateBrightness(colorPicker.value);
 
     try {
+        // Get the size of the QR code
+        // qrData = await QRCode.create(
+        //     textField.value, 
+        //     opts
+        // );
+        // console.log(qrData.modules.size);
+
         const dataURL = await 
             QRCode.toDataURL(
             textField.value, 
