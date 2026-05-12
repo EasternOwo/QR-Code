@@ -3,6 +3,12 @@
 const textField = document.getElementById("text-field");
 
 let currentLevel = 'L';
+const ecButtonL = document.getElementById("ec-button-l");
+const ecButtonM = document.getElementById("ec-button-m");
+const ecButtonQ = document.getElementById("ec-button-q");
+const ecButtonH = document.getElementById("ec-button-h");
+const ecButtons = [ecButtonL, ecButtonM, ecButtonQ, ecButtonH];
+
 const ecValText = document.getElementById("ec-value-text");
 const ecSlider = document.getElementById("ec-slider");
 const ecSliderText = document.getElementById("ec-slider-text");
@@ -18,28 +24,34 @@ const hexField = document.getElementById("hex-field");
 const codeImg = document.getElementById("qrcode");
 const codeBg = document.getElementById("qrcode-bg");
 
+const testBlock = document.getElementById("test-block");
+
 const dict = {0: "L", 1: "M", 2: "Q", 3: "H"};
 const dict2 = {0: 7, 1: 15, 2: 25, 3: 30};
 
-// let ecRecord = 1;
+function setECLevel(level) {
+    ecButtons.forEach(btn => {
+        btn.classList.remove("radio-button-active");
+    });
+
+    ecButtons[level].classList.add("radio-button-active");
+
+    ecSliderText.textContent = "圖形被遮擋 " + dict2[level] + "% 時仍可讀取";
+
+    currentLevel = dict[level];
+    updateCode();
+}
 
 function setErrorCorrectionLevel() {
-    
     const val = Math.round(ecSlider.valueAsNumber);
-    ecSlider.value = val;
+    setElasticSliderPosition()
 
     const newLevel = dict[val];
 
     currentLevel = newLevel;
     ecValText.textContent = newLevel;
-    ecSliderText.textContent = "圖形毀損 " + dict2[val] + "% 時仍可掃描";
+    ecSliderText.textContent = "圖形被遮擋 " + dict2[val] + "% 時仍可讀取";
     updateCode();
-}
-
-function setSize() {
-    const val = sizeSlider.valueAsNumber;
-    sizeValText.textContent = val;
-    sizeSliderText.textContent = "一格對應 " + val + " × " + val + " 像素";
 }
 
 function setColor(color) {
@@ -56,10 +68,10 @@ function setColorFromPicker() {
 }
 
 function setColorFromHex() {
-    let re1 = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
-    let re2 = /([0-9a-f]{3}|[0-9a-f]{6})$/i;
-    
-    let color = hexField.value;
+    const re1 = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
+    const re2 = /^([0-9a-f]{6}|[0-9a-f]{3})$/i;
+
+    const color = hexField.value.trim();
 
     if (re1.test(color)) {
         setColor(color);
@@ -81,8 +93,7 @@ function calculateBrightness(colorHex) {
 }
 
 let isUpdating = false;
-setErrorCorrectionLevel();
-setSize();
+setECLevel(0);
 
 let qrData = null;
 
@@ -95,7 +106,7 @@ async function updateCode() {
         errorCorrectionLevel: currentLevel,
         quality: 0.3,
         margin: 0,
-        scale: 10,
+        scale: 15,
         color: {
             dark: colorPicker.value + "FF",
             light: "#00000000"
@@ -143,7 +154,7 @@ function downloadPNG() {
         errorCorrectionLevel: currentLevel,
         quality: 0.3,
         margin: 0,
-        scale: sizeSlider.valueAsNumber,
+        scale: 15,
         color: {
             dark: colorPicker.value + "FF",
             light:"#00000000"
@@ -154,13 +165,23 @@ function downloadPNG() {
         textField.value, 
         opts
     ).then(dataURL => {
-        var link = document.createElement("a");
-        link.download = "qrcode.png";
-        link.href = dataURL;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        delete link;
+        fetch(dataURL)
+            .then(res => { return res.blob() })
+            .then(blob => {
+                const url = URL.createObjectURL(blob);
+
+                console.log(url);
+
+                const link = document.createElement("a");
+                link.download = "qrcode.png";
+                link.href = url;
+                
+                document.body.appendChild(link);
+                link.click();
+
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            })
     });
 }
 
@@ -172,25 +193,27 @@ function downloadSVG() {
         errorCorrectionLevel: currentLevel,
         quality: 0.3,
         margin: 0,
-        scale: sizeSlider.valueAsNumber,
+        scale: 15,
         color: {
             dark: colorPicker.value + "FF",
-            light:"#00000000"
+            light: "#00000000"
         }
     };
 
-    QRCode.toString(
-        textField.value, 
-        opts
-    ).then(text => {
-        const dataURL = `data:text/plain;base64,${btoa(text)}`;
+    QRCode.toString(textField.value, opts).then(svgString => {
+        const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
 
-        var link = document.createElement("a");
+        console.log(url);
+
+        const link = document.createElement("a");
         link.download = "qrcode.svg";
-        link.href = dataURL;
+        link.href = url;
+        
         document.body.appendChild(link);
         link.click();
+
         document.body.removeChild(link);
-        delete link;
+        URL.revokeObjectURL(url);
     });
 }

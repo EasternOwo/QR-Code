@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <title>QR Code 產生器</title>
@@ -29,33 +29,41 @@
 
       <div class="main-divide">
         <div style="display: flex; flex-direction: column; row-gap: 15px;">
-          <div class="parameter-box" style="padding-bottom: 15px;">
+          <div class="parameter-box">
             <h3>內容</h3>
             <input class="text-field" type="text" id="text-field" placeholder="輸入文字" oninput="updateCode()"></input>
           </div>
 
-          <!-- <div class="parameter-box">
-            <h3>容錯能力</h3>
-            <div style="display: flex; column-gap: 5px;">
-              <button id="button-l" class="radio-button" onclick="setErrorCorrectionLevel('L')">L</button>
-              <button id="button-m" class="radio-button" onclick="setErrorCorrectionLevel('M')">M</button>
-              <button id="button-q" class="radio-button" onclick="setErrorCorrectionLevel('Q')">Q</button>
-              <button id="button-h" class="radio-button" onclick="setErrorCorrectionLevel('H')">H</button>
+          <div class="parameter-box">
+            <h3>顏色</h3>
+            <div style="display: flex; column-gap: 10px; align-items: center;">
+              <button id="picker-wrapper">
+                <input type="color" value="#000000" id="picker" onchange="setColorFromPicker()" style="width: 55px; height: 35px; opacity: 0%; cursor: pointer;">
+              </button>
+              <input class="text-field mono" type="text" id="hex-field" placeholder="輸入色碼" value="#000000" onchange="setColorFromHex()"></input>
             </div>
-          </div> -->
+          </div>
 
           <div class="parameter-box">
             <div class="parameter-title-group">
               <h3>容錯等級</h3>
-              <div class="parameter-title-circle mono">
-                <span id="ec-value-text">M</span>
+              <div class="label-circle has-label" tabindex="0">
+                <span id="ec-value-text">?</span>
               </div>
             </div>
-            <input id="ec-slider" class="slider" type="range" min="-0.25" max="3.25" value="1" step="0.01" oninput="setErrorCorrectionLevel()">
-            <span id="ec-slider-text" style="font-size: 0.9rem; color: #888;">可修正約 7% 的圖形損壞</span>
+            
+            <!-- <span class="mobile-only" style="font-size: 0.9rem; color: #888;">QR code 在受到部分遮擋時仍有可能被讀取。容錯等級越高，就有機會承受越多遮擋，但 QR code 的複雜度可能因此增加。</span> -->
+
+            <div style="height: 35px; display: flex; column-gap: 4px; padding: 0px;">
+              <button id="ec-button-l" class="radio-button mono" style="border-top-left-radius: 0.5rem; border-bottom-left-radius: 0.5rem;" onclick="setECLevel(0)">1</button>
+              <button id="ec-button-m" class="radio-button mono" onclick="setECLevel(1)">2</button>
+              <button id="ec-button-q" class="radio-button mono" onclick="setECLevel(2)">3</button>
+              <button id="ec-button-h" class="radio-button mono" style="border-top-right-radius: 0.5rem; border-bottom-right-radius: 0.5rem;" onclick="setECLevel(3)">4</button>
+            </div>
+            <span id="ec-slider-text" style="font-size: 0.9rem; color: #888;">圖形被遮擋 7% 時仍可讀取</span>
           </div>
 
-          <div class="parameter-box">
+          <!-- <div class="parameter-box">
             <div class="parameter-title-group">
               <h3>輸出尺寸</h3>
               <div class="parameter-title-circle mono">
@@ -64,25 +72,16 @@
             </div>
             <input id="size-slider" class="slider" type="range" min="1" max="32" value="10" step="1" oninput="setSize()">
             <span id="size-slider-text" style="font-size: 0.9rem; color: #888;">一格對應 10 × 10 像素</span>
-          </div>
-
-          <div class="parameter-box" style="padding-bottom: 15px;">
-          <h3>顏色</h3>
-            <div style="display: flex; column-gap: 10px; align-items: center;">
-              <button id="picker-wrapper">
-                <input type="color" value="#000000" id="picker" onchange="setColorFromPicker()" style="width: 55px; height: 35px; opacity: 0%;">
-              </button>
-              <input class="text-field mono" type="text" id="hex-field" placeholder="輸入色碼" value="#000000" onchange="setColorFromHex()"></input>
-            </div>
-          </div>
+          </div> -->
         </div>
+
 
         <div style="width: 100%; padding: 15px; background-color: #E2E6E9; border-radius: 0.3rem; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; row-gap: 8px;">
           <div id="qrcode-bg" style="height:100%; padding: 30px; border-width: 0px; border-radius: 0.3rem; background-color: white; display: flex; align-items: center; justify-content: center; transition: 0.3s;">
             <img id="qrcode" src="images/blank.png" style="width: 150px; height: 150px;"></img>
           </div>
           
-          <div style="display: flex; column-gap: 8px; align-items: center; justify-content: right;">
+          <div style="display: flex; column-gap: 6px; align-items: center; justify-content: right;">
             <h3 style="margin: 0px; margin-right: 5px;">下載</h3>
             <button class="download-button mono" onclick="downloadPNG()">
               PNG
