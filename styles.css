@@ -64,12 +64,12 @@
 
     border: 2px solid #666;
     border-radius: 999px;
+    
     display: flex;
     align-items: center;
     justify-content: center;
 
     color: #666;
-    font-weight: 500;
     font-size: 11pt;
 
     -webkit-user-select: none;
@@ -77,10 +77,10 @@
 }
 
 .mono {
-  font-family: "Roboto Mono", monospace;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .text-field {
@@ -141,7 +141,10 @@
     border-radius: 0.3rem;
     border-color: #ddd;
 
-    box-sizing: content-box;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     background-color: #000000;
 }
@@ -231,19 +234,9 @@ button {
     display: block;
 }
 
-/* .mobile-only {
-        display: none
-    } */
-
-/* @media (max-width: 800px) {
-    .has-label {
-        display: none;
-    }
-
-    .mobile-only {
-        display: inline
-    }
-} */
+.has-label.active::after {
+    display: block;
+}
 
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;

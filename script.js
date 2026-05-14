@@ -9,8 +9,6 @@ const ecButtonQ = document.getElementById("ec-button-q");
 const ecButtonH = document.getElementById("ec-button-h");
 const ecButtons = [ecButtonL, ecButtonM, ecButtonQ, ecButtonH];
 
-const ecValText = document.getElementById("ec-value-text");
-const ecSlider = document.getElementById("ec-slider");
 const ecSliderText = document.getElementById("ec-slider-text");
 
 const sizeValText = document.getElementById("size-value-text");
@@ -29,6 +27,21 @@ const testBlock = document.getElementById("test-block");
 const dict = {0: "L", 1: "M", 2: "Q", 3: "H"};
 const dict2 = {0: 7, 1: 15, 2: 25, 3: 30};
 
+const labels = document.querySelectorAll('.has-label');
+
+labels.forEach(label => {
+    label.addEventListener('click', e => {
+        e.stopPropagation() // stops document from detecting click and closing the label immediately
+        label.classList.toggle('.active');
+    })
+});
+
+document.addEventListener('click', e => {
+    labels.forEach(label => {
+        label.classList.remove('.active');
+    });
+});
+
 function setECLevel(level) {
     ecButtons.forEach(btn => {
         btn.classList.remove("radio-button-active");
@@ -39,18 +52,6 @@ function setECLevel(level) {
     ecSliderText.textContent = "圖形被遮擋 " + dict2[level] + "% 時仍可讀取";
 
     currentLevel = dict[level];
-    updateCode();
-}
-
-function setErrorCorrectionLevel() {
-    const val = Math.round(ecSlider.valueAsNumber);
-    setElasticSliderPosition()
-
-    const newLevel = dict[val];
-
-    currentLevel = newLevel;
-    ecValText.textContent = newLevel;
-    ecSliderText.textContent = "圖形被遮擋 " + dict2[val] + "% 時仍可讀取";
     updateCode();
 }
 
