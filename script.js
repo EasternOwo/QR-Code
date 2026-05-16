@@ -15,10 +15,6 @@ const sizeValText = document.getElementById("size-value-text");
 const sizeSlider = document.getElementById("size-slider");
 const sizeSliderText = document.getElementById("size-slider-text");
 
-const colorPicker = document.getElementById("picker");
-const colorPickerWrapper = document.getElementById("picker-wrapper");
-const hexField = document.getElementById("hex-field");
-
 const codeImg = document.getElementById("qrcode");
 const codeBg = document.getElementById("qrcode-bg");
 
@@ -55,34 +51,6 @@ function setECLevel(level) {
     updateCode();
 }
 
-function setColor(color) {
-    colorPicker.value = color;
-    colorPickerWrapper.style.backgroundColor = color;
-    hexField.value = colorPicker.value.toUpperCase();
-
-    updateCode();
-}
-
-function setColorFromPicker() {
-    let color = colorPicker.value;
-    setColor(color);
-}
-
-function setColorFromHex() {
-    const re1 = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
-    const re2 = /^([0-9a-f]{6}|[0-9a-f]{3})$/i;
-
-    const color = hexField.value.trim();
-
-    if (re1.test(color)) {
-        setColor(color);
-    } else if (re2.test(color)) {
-        setColor('#' + color);
-    } else {
-        setColor('#000000');
-    }
-}
-
 function calculateBrightness(colorHex) {
     const hexInt = parseInt(colorHex.replace("#", ''), 16);
     const r = (hexInt >> 16) % 256;
@@ -94,8 +62,6 @@ function calculateBrightness(colorHex) {
 }
 
 let isUpdating = false;
-setECLevel(0);
-
 let qrData = null;
 
 async function updateCode() {
@@ -109,21 +75,14 @@ async function updateCode() {
         margin: 0,
         scale: 15,
         color: {
-            dark: colorPicker.value + "FF",
+            dark: colorPicker.color + "FF",
             light: "#00000000"
         }
     };
 
-    let bri = calculateBrightness(colorPicker.value);
+    let bri = calculateBrightness(colorPicker.color);
 
     try {
-        // Get the size of the QR code
-        // qrData = await QRCode.create(
-        //     textField.value, 
-        //     opts
-        // );
-        // console.log(qrData.modules.size);
-
         const dataURL = await 
             QRCode.toDataURL(
             textField.value, 
@@ -147,6 +106,57 @@ async function updateCode() {
     }
 }
 
+class ColorPicker {
+    constructor(color, id, callback) {
+        this.defaultColor = color;
+        this.picker = document.getElementById(`${id}-picker`);
+        this.wrapper = document.getElementById(`${id}-picker-wrapper`);
+        this.textField = document.getElementById(`${id}-picker-text-field`);
+        this.callback = callback;
+    }
+
+    get color() {
+        return this.picker.value;
+    }
+
+    normalize(color) {
+        const re1 = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
+        const re2 = /^([0-9a-f]{6}|[0-9a-f]{3})$/i;
+        const c1 = color.trim();
+
+        if (re1.test(c1))
+            return c1;
+        else if (re2.test(c1))
+            return '#' + c1;
+        return null;
+    }
+
+    setColor(color) {
+        const c = this.normalize(color);
+        if (c === null) {
+            this.textField.value = this.picker.value.toUpperCase();
+            return;
+        }
+
+        this.picker.value = c;
+        this.wrapper.style.backgroundColor = c;
+        this.textField.value = this.picker.value.toUpperCase();
+        this.callback(c);
+    }
+
+    init() {
+        this.picker.addEventListener("change", event => {
+            this.setColor(this.picker.value);
+        });
+
+        this.textField.addEventListener("change", event => {
+            this.setColor(this.textField.value);
+        });
+
+        this.setColor(this.defaultColor);
+    }
+}
+
 function downloadPNG() {
     if (!textField.value) return;
 
@@ -157,7 +167,7 @@ function downloadPNG() {
         margin: 0,
         scale: 15,
         color: {
-            dark: colorPicker.value + "FF",
+            dark: colorPicker.color + "FF",
             light:"#00000000"
         }
     };
@@ -196,7 +206,7 @@ function downloadSVG() {
         margin: 0,
         scale: 15,
         color: {
-            dark: colorPicker.value + "FF",
+            dark: colorPicker.color + "FF",
             light: "#00000000"
         }
     };
@@ -218,3 +228,8 @@ function downloadSVG() {
         URL.revokeObjectURL(url);
     });
 }
+
+let colorPicker = new ColorPicker("#000000", "qr-color", updateCode);
+colorPicker.init();
+
+setECLevel(0);

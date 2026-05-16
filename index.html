@@ -36,11 +36,18 @@
 
           <div class="parameter-box">
             <h3>顏色</h3>
-            <div style="display: flex; column-gap: 10px; align-items: center;">
-              <button id="picker-wrapper">
-                <input type="color" value="#000000" id="picker" onchange="setColorFromPicker()" style="width: 55px; height: 35px; opacity: 0%; cursor: pointer;">
+            <!-- <div style="display: flex; column-gap: 10px; align-items: center;">
+              <button id="qr-color-picker-wrapper">
+                <input type="color" value="#000000" id="qr-color-picker" onchange="setColorFromPicker()" style="width: 55px; height: 35px; opacity: 0%; cursor: pointer;">
               </button>
-              <input class="text-field mono" type="text" id="hex-field" placeholder="輸入色碼" value="#000000" onchange="setColorFromHex()"></input>
+              <input class="text-field mono" type="text" id="qr-color-text-field" placeholder="輸入色碼" value="#000000" onchange="setColorFromHex()"></input>
+            </div> -->
+
+            <div style="display: flex; column-gap: 10px; align-items: center;">
+              <button id="qr-color-picker-wrapper" class="picker-wrapper">
+                <input type="color" value="#000000" id="qr-color-picker" style="width: 55px; height: 35px; opacity: 0%; cursor: pointer;">
+              </button>
+              <input class="text-field mono" type="text" id="qr-color-picker-text-field" placeholder="輸入色碼" value="#000000"></input>
             </div>
           </div>
 
